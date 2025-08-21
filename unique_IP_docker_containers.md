@@ -69,6 +69,8 @@ So, the steps to make your PLCs accessible from both the VM and your MacBook:
 - sudo ip addr add 192.168.56.10/24 dev macvlan0
 - sudo ip link set macvlan0 up
 
+- docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan
+
 Run the PLC container on the MacVLAN network without -p:
 
 - docker run -d --name plc1 --net plc-macvlan --ip 192.168.56.100 --privileged openplc:v3
@@ -81,3 +83,7 @@ Test access:
 From the VM or MacBook:
 
 - http://192.168.56.100:8080
+
+### Had to add bridged adapter , promiscuous mode set to Allow All
+
+<img width="2352" height="1196" alt="image" src="https://github.com/user-attachments/assets/d85f109c-07e7-48ab-a329-06276cae1ead" />
