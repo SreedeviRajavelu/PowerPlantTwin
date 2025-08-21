@@ -2,15 +2,24 @@
 
 docker build -t openplc-docker .
 
-2. ✅ Step 2: Create macvlan network
+2. ✅ Step 2: Create macvlan network (not eth0 for my case as I have my IEDs communicating with MacBook using the bridge100 interface)
 (Replace eth0 with the actual NIC of your host machine, e.g. en0 on macOS/Linux.)
 docker network create -d macvlan \
   --subnet=192.168.1.0/24 \
   --gateway=192.168.1.1 \
   -o parent=eth0 \
   plc_macvlan
+
 This makes a special Docker network where each container looks like a separate device on your LAN (just like your VMs).
-3. ✅ Step 3: Run containers with static IPs
+
+**Step 2: Create the MacVLAN network on bridge100**
+docker network create -d macvlan \
+  --subnet=192.168.56.0/24 \
+  --gateway=192.168.56.1 \
+  -o parent=bridge100 \
+  plc-macvlan
+
+4. ✅ Step 3: Run containers with static IPs
 Here’s where the difference comes in:
 On a bridge network, you must use -p host_port:container_port because containers are hidden behind the host, and ports must be forwarded.
 On a macvlan network, the container already has its own IP on the LAN → so you don’t need -p at all.
