@@ -16,7 +16,7 @@ Since I am on MacBook Air (arm64), some images may try to pull amd64 binaries
   - `docker run --platform linux/amd64 ...`  
 
 ## Content of updated Dockerfile to be used based on chatgpt:
-`
+```
 FROM debian:buster
 
 USER root
@@ -65,4 +65,4 @@ EXPOSE 43628
 
 CMD ["/home/openplc/run.sh"]
 
-`
+```
