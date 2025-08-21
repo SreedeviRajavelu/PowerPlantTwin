@@ -66,12 +66,18 @@ You can access the PLC at http://192.168.56.100:8080 from both your MacBook and 
 So, the steps to make your PLCs accessible from both the VM and your MacBook:
 ## Create the MacVLAN interface on the Ubuntu VM:
 - sudo ip link add macvlan0 link enp0s9 type macvlan mode bridge
-sudo ip addr add 192.168.56.10/24 dev macvlan0
+- sudo ip addr add 192.168.56.10/24 dev macvlan0
 - sudo ip link set macvlan0 up
+
 Run the PLC container on the MacVLAN network without -p:
+
 - docker run -d --name plc1 --net plc-macvlan --ip 192.168.56.100 --privileged openplc:v3
+
 Test access:
-From the VM:
+  From the VM:
+  
 - ping 192.168.56.100
+  
 From the VM or MacBook:
-http://192.168.56.100:8080
+
+- http://192.168.56.100:8080
