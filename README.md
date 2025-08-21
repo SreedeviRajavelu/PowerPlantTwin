@@ -10,6 +10,10 @@ https://github.com/jpaffrath/docker-openplc
 Recommended fix: Upgrade base image
 - switch to newer Debian or Ubuntu base image while installing required Python 2 dependencies
 
+Since I am on MacBook Air (arm64), some images may try to pull amd64 binaries
+- Force platform emulation with:
+  - `docker buildx build --platform linux/amd64 -t openplc-docker . `
+  - `docker run --platform linux/amd64 ...`  
 
 ## Content of updated Dockerfile to be used based on chatgpt:
 `
