@@ -118,3 +118,44 @@ From the VM or MacBook:
 ### Had to add bridged adapter , promiscuous mode set to Allow All
 
 <img width="2352" height="1196" alt="image" src="https://github.com/user-attachments/assets/d85f109c-07e7-48ab-a329-06276cae1ead" />
+
+
+## Persisting MacVLAN interface across reboots using systemd service:
+
+1. sudo nano /etc/systemd/system/macvlan0.service
+
+2. Paste this content:
+   ```
+   [Unit]
+Description=Macvlan0 network interface
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/ip link add macvlan0 link enp0s9 type macvlan mode bridge
+ExecStart=/sbin/ip addr add 192.168.56.10/24 dev macvlan0
+ExecStart=/sbin/ip link set macvlan0 up
+RemainAfterExit=yes
+
+ExecStop=/sbin/ip link set macvlan0 down
+ExecStop=/sbin/ip link delete macvlan0
+
+[Install]
+WantedBy=multi-user.target
+```
+
+3. Reload systemd and enable the service:
+```
+sudo systemctl daemon-reload
+sudo systemctl enable macvlan0
+```
+
+4. Start it immediately (without reboot):
+`sudo systemctl start macvlan0`
+
+5. Verify after reboot
+`ip a show macvlan0`
+ 
+
+
