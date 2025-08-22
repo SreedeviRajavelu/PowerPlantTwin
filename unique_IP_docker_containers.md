@@ -65,9 +65,18 @@ The -p 8081:8080 port mapping is not needed for MacVLAN, because MacVLAN contain
 You can access the PLC at http://192.168.56.100:8080 from both your MacBook and the Ubuntu VM (using macvlan0) once it’s up.
 So, the steps to make your PLCs accessible from both the VM and your MacBook:
 ## Create the MacVLAN interface on the Ubuntu VM:
+'''
 - sudo ip link add macvlan0 link enp0s9 type macvlan mode bridge
 - sudo ip addr add 192.168.56.10/24 dev macvlan0
 - sudo ip link set macvlan0 up
+'''
+Pesist the step above using systemd service
+🔹 systemd service
+What it is: systemd is the init system Ubuntu uses to start services and processes at boot.
+What a service does: You can write a custom .service file that tells Ubuntu:
+"Run this command (or script) when the machine boots"
+"Restart it if it fails"
+"Run it after the network is ready"  
 
 - docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan
 
