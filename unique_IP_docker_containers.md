@@ -26,7 +26,7 @@ docker network create -d macvlan \
   -o parent=bridge100 \
   plc-macvlan
 ```
-
+docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan
 - single line command:
   ```
 
