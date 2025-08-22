@@ -4,16 +4,17 @@
 docker build -t openplc-docker .
 
 *Preface before step 2:  
-Unlike Linux, macOS network interfaces can’t be directly assigned to macvlan. Macvlan works on Linux because it can create a virtual interface on top of a real NIC. On macOS, Docker Desktop runs in a Linux VM (inside HyperKit/UTM), so it doesn’t have direct access to the Mac’s physical interfaces for macvlan.
-Implication:
-You cannot directly use bridge100 as the parent on macOS.
-Macvlan networking for containers with unique LAN IPs is essentially not supported on Docker Desktop for macOS.
-You’ll need to either:
-Use host networking (but that only works for Linux hosts).
-Use the default bridge network and map ports (-p) uniquely for each PLC container.
-Run a Linux VM (e.g., Ubuntu VM) on your Mac and create macvlan networks there. The VM handles the macvlan, and Docker containers inside it can get unique LAN IPs.*
+- Unlike Linux, macOS network interfaces can’t be directly assigned to macvlan. Macvlan works on Linux because it can create a virtual interface on top of a real NIC. 
 
-**Step 2: Create MacVLAN network**
+- On macOS, Docker Desktop runs in a Linux VM (inside HyperKit/UTM), so it doesn’t have direct access to the Mac’s physical interfaces for macvlan.
+
+Implication:
+- You cannot directly use bridge100 as the parent on macOS.
+- Macvlan networking for containers with unique LAN IPs is essentially not supported on Docker Desktop for macOS.
+You’ll need to either:
+1. Use host networking (but that only works for Linux hosts).
+2. Use the default bridge network and map ports (-p) uniquely for each PLC container.
+3. Run a Linux VM (e.g., Ubuntu VM) on your Mac and create macvlan networks there. The VM handles the macvlan, and Docker containers inside it can get unique LAN IPs.*
 
 Since you already have an Ubuntu VM for IEDs, the recommended approach is:
 
@@ -21,6 +22,7 @@ Since you already have an Ubuntu VM for IEDs, the recommended approach is:
 - Create a *macvlan network in that VM pointing to the VM’s virtual NIC.*
 - Assign each PLC container a unique IP from your LAN range.
 
+**Step 2: Create MacVLAN network**
 
 Inside the Ubuntu VM for IEDs, create a MacVLAN network in that VM and then assign each PLC docker container a unique IP. This Ubuntu VM is on virtualbox on MacBook:
 
