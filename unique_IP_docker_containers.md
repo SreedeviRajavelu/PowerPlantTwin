@@ -11,6 +11,10 @@ docker network create -d macvlan \
   -o parent=eth0 \
   plc_macvlan
 
+Single line command:
+' docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan `
+
+
 This makes a special Docker network where each container looks like a separate device on your LAN (just like your VMs).
 
 **Step 2: Create the MacVLAN network on bridge100**
