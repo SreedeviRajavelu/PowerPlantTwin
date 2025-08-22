@@ -89,7 +89,7 @@ sudo ip link set macvlan0 up
 
 ```
 
-Pesist the step above using systemd service
+Pesist the step above (creation of MacVLAN interface) using systemd service
 
 🔹 systemd service
 What it is: systemd is the init system Ubuntu uses to start services and processes at boot.
@@ -104,7 +104,10 @@ What a service does: You can write a custom .service file that tells Ubuntu:
 
 Run the PLC container on the MacVLAN network without -p:
 
-- docker run -d --name plc1 --net plc-macvlan --ip 192.168.56.100 --privileged openplc:v3
+- docker run -d --name st_plc --net plc-macvlan --ip 192.168.56.100 --privileged openplc:v3
+- docker run -d --name eg_plc --net plc-macvlan --ip 192.168.56.101 --privileged openplc:v3
+- docker run -d --name gt_plc --net plc-macvlan --ip 192.168.56.102 --privileged openplc:v3
+- docker run -d --name hrsg_plc --net plc-macvlan --ip 192.168.56.103 --privileged openplc:v3
 
 Test access:
   From the VM:
@@ -158,4 +161,5 @@ sudo systemctl enable macvlan0
 `ip a show macvlan0`
  
 
-
+## Bash script to start 
+(placed inside powerplant folder)
