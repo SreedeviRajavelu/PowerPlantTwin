@@ -68,9 +68,9 @@ So, the steps to make your PLCs accessible from both the VM and your MacBook:
 
 ```
 
-- sudo ip link add macvlan0 link enp0s9 type macvlan mode bridge
-- sudo ip addr add 192.168.56.10/24 dev macvlan0
-- sudo ip link set macvlan0 up
+sudo ip link add macvlan0 link enp0s9 type macvlan mode bridge
+sudo ip addr add 192.168.56.10/24 dev macvlan0
+sudo ip link set macvlan0 up
 
 ```
 
