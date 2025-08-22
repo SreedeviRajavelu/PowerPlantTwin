@@ -161,5 +161,24 @@ sudo systemctl enable macvlan0
 `ip a show macvlan0`
  
 
-## Bash script to start 
+## Bash script to start docker containers for running PLCs
 (placed inside powerplant folder)
+```
+#!/bin/bash
+docker start st_plc
+echo "✅ ST PLC started successfully!"
+echo "➡️  Access ST PLC at: http://192.168.56.100:8080/login"
+
+docker start eg_plc
+echo "✅ EG PLC started successfully!"
+echo "➡️  Access EG PLC at: http://192.168.56.101:8080/login"
+
+docker start gt_plc
+echo "✅ GT PLC started successfully!"
+echo "➡️  Access GT PLC at: http://192.168.56.102:8080/login"
+
+docker start hrsg_plc
+echo "✅ HRSG PLC started successfully!"
+echo "➡️  Access HRSG PLC at: http://192.168.56.103:8080/login"
+
+```
