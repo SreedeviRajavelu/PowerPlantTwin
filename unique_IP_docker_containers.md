@@ -1,4 +1,5 @@
 1. ✅ Step 1: Build your image
+( After following steps in the repository: https://github.com/thiagoralves/OpenPLC_v3.git )
 
 docker build -t openplc-docker .
 
@@ -84,6 +85,8 @@ What a service does: You can write a custom .service file that tells Ubuntu:
 "Run it after the network is ready"  
 
 - docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan
+
+
 
 Run the PLC container on the MacVLAN network without -p:
 
