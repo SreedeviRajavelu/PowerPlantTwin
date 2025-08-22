@@ -1,9 +1,9 @@
-1. ✅ Step 1: Build your image
+**Step 1: Build your image**
 ( After following steps in the repository: https://github.com/thiagoralves/OpenPLC_v3.git )
 
 docker build -t openplc-docker .
 
-*Preface before step 2:  
+Preface before step 2:  
 - Unlike Linux, macOS network interfaces can’t be directly assigned to macvlan. Macvlan works on Linux because it can create a virtual interface on top of a real NIC. 
 
 - On macOS, Docker Desktop runs in a Linux VM (inside HyperKit/UTM), so it doesn’t have direct access to the Mac’s physical interfaces for macvlan.
@@ -14,7 +14,7 @@ Implication:
 You’ll need to either:
 1. Use host networking (but that only works for Linux hosts).
 2. Use the default bridge network and map ports (-p) uniquely for each PLC container.
-3. Run a Linux VM (e.g., Ubuntu VM) on your Mac and create macvlan networks there. The VM handles the macvlan, and Docker containers inside it can get unique LAN IPs.*
+3. Run a Linux VM (e.g., Ubuntu VM) on your Mac and create macvlan networks there. The VM handles the macvlan, and Docker containers inside it can get unique LAN IPs.
 
 Since you already have an Ubuntu VM for IEDs, the recommended approach is:
 
