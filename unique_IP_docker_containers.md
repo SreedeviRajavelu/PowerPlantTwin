@@ -125,7 +125,7 @@ From the VM or MacBook:
 1. sudo nano /etc/systemd/system/macvlan0.service
 
 2. Paste this content:
-   ```
+```
    [Unit]
 Description=Macvlan0 network interface
 After=network-online.target
