@@ -3,8 +3,17 @@
 
 docker build -t openplc-docker .
 
-2. ✅ Step 2: Create macvlan network (not eth0 for my case as I have my IEDs communicating with MacBook using the bridge100 interface)
-(Replace eth0 with the actual NIC of your host machine, e.g. en0 on macOS/Linux.)
+*Preface before step 2:  
+Unlike Linux, macOS network interfaces can’t be directly assigned to macvlan. Macvlan works on Linux because it can create a virtual interface on top of a real NIC. On macOS, Docker Desktop runs in a Linux VM (inside HyperKit/UTM), so it doesn’t have direct access to the Mac’s physical interfaces for macvlan.
+Implication:
+You cannot directly use bridge100 as the parent on macOS.
+Macvlan networking for containers with unique LAN IPs is essentially not supported on Docker Desktop for macOS.
+You’ll need to either:
+Use host networking (but that only works for Linux hosts).
+Use the default bridge network and map ports (-p) uniquely for each PLC container.
+Run a Linux VM (e.g., Ubuntu VM) on your Mac and create macvlan networks there. The VM handles the macvlan, and Docker containers inside it can get unique LAN IPs.*
+
+**Step 2: Create MacVLAN network**
 
 Since you already have an Ubuntu VM for IEDs, the recommended approach is:
 
@@ -24,15 +33,7 @@ Single line command for creating Docker MacVLAN network :
 
 This makes a special Docker network where each container looks like a separate device on your LAN (just like your VMs).
 
-**Step 2: Create the MacVLAN network on bridge100**
 
-```
-docker network create -d macvlan \
-  --subnet=192.168.56.0/24 \
-  --gateway=192.168.56.1 \
-  -o parent=bridge100 \
-  plc-macvlan
-```
 - single line command:
  ` docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan `
 
