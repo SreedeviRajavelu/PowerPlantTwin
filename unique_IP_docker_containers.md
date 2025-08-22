@@ -34,9 +34,8 @@ docker network create -d macvlan \
   plc-macvlan
 ```
 - single line command:
-  ```
-  docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan
-```
+ ` docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan `
+
 
 4. ✅ Step 3: Run containers with static IPs
 Here’s where the difference comes in:
