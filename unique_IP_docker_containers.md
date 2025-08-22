@@ -19,7 +19,7 @@ You’ll need to either:
 Since you already have an Ubuntu VM for IEDs, the recommended approach is:
 
 - Run all your PLC containers inside that Ubuntu VM.
-- Create a *macvlan network in that VM pointing to the VM’s virtual NIC.*
+- Create a **macvlan network in that VM pointing to the VM’s virtual NIC.**
 - Assign each PLC container a unique IP from your LAN range.
 
 **Step 2: Create MacVLAN network**
@@ -28,7 +28,7 @@ Inside the Ubuntu VM for IEDs, create a MacVLAN network in that VM and then assi
 
 1) Check which network interface of your Ubuntu VM connects to the same network as your IEDs. Check with `ip a` inside the VM.
 
-Single line command for creating Docker MacVLAN network :
+Single line command for creating Docker MacVLAN network inside Ubuntu VM using enp0s9 as the parent interface and 192.168.56.0/24 as the subnet:
 
 ' docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan `
 
