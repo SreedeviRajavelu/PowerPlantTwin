@@ -4,17 +4,17 @@
 - MacVLAN literally means creating virtual interfaces that operate at the MAC layer each appearing as a separate physical network device with its own MAC address.
 - Docker MacVLAN is a network driver that allows Docker containers to have their own unique MAC addresses directly on the host's physical network, making them appear as if they are directly connected devices on the network.
 
-- *A MAC address (short for medium access control address or media access control address) is a unique identifier assigned to a network interface controller (NIC) for use as a network address in communications within a network segment.*
+- **A MAC address (short for medium access control address or media access control address) is a unique identifier assigned to a network interface controller (NIC) for use as a network address in communications within a network segment.**
 
-**Step 1: Build your image**
+## Step 1: Build your image
 ( After following steps in the repository: https://github.com/thiagoralves/OpenPLC_v3.git )
 
 docker build -t openplc-docker .
 
 Preface before step 2:  
-- Unlike Linux, macOS network interfaces can’t be directly assigned to macvlan. Macvlan works on Linux because it can create a virtual interface on top of a real NIC. 
+- **Unlike Linux, macOS network interfaces can’t be directly assigned to macvlan. Macvlan works on Linux because it can create a virtual interface on top of a real NIC.** 
 
-- On macOS, Docker Desktop runs in a Linux VM (inside HyperKit/UTM), so it doesn’t have direct access to the Mac’s physical interfaces for macvlan.
+- **On macOS, Docker Desktop runs in a Linux VM (inside HyperKit/UTM), so it doesn’t have direct access to the Mac’s physical interfaces for macvlan.**
 
 Implication:
 - You cannot directly use bridge100 as the parent on macOS.
@@ -30,7 +30,7 @@ Since you already have an Ubuntu VM for IEDs, the recommended approach is:
 - Create a **macvlan network in that VM pointing to the VM’s virtual NIC.**
 - Assign each PLC container a unique IP from your LAN range.
 
-**Step 2: Create MacVLAN network**
+## Step 2: Create MacVLAN network
 
 Inside the Ubuntu VM for IEDs, create a MacVLAN network in that VM and then assign each PLC docker container a unique IP. This Ubuntu VM is on virtualbox on MacBook:
 
@@ -44,11 +44,11 @@ Single line command for creating Docker MacVLAN network inside Ubuntu VM using e
 This makes a special Docker network where each container looks like a separate device on your LAN (just like your VMs).
 
 
-- single line command:
+- Single line command:
  ` docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan `
 
 
-4. ✅ Step 3: Run containers with static IPs
+4. ✅ Step 3: Run containers with static IPs  (Ignore this part, was not used. U 
 Here’s where the difference comes in:
 On a bridge network, you must use -p host_port:container_port because containers are hidden behind the host, and ports must be forwarded.
 On a macvlan network, the container already has its own IP on the LAN → so you don’t need -p at all.
@@ -83,11 +83,15 @@ Yes — the commands you listed create a MacVLAN interface on the Ubuntu VM that
 Without this, MacVLAN containers cannot communicate with their parent host (the Ubuntu VM) due to how MacVLAN works.
 After adding macvlan0 with a host IP (192.168.56.10), your VM can access the PLC containers using their MacVLAN IPs.
 However, there’s one important point about your docker run command:
+
 docker run -d --name plc1 --net plc-macvlan --ip 192.168.56.100 -p 8081:8080 --privileged openplc:v3
-The -p 8081:8080 port mapping is not needed for MacVLAN, because MacVLAN containers already have their own IPs. The host port mapping works only on bridge networks.
+
+The `-p 8081:8080` port mapping is not needed for MacVLAN, because MacVLAN containers already have their own IPs. The host port mapping works only on bridge networks.
 You can access the PLC at http://192.168.56.100:8080 from both your MacBook and the Ubuntu VM (using macvlan0) once it’s up.
+
 So, the steps to make your PLCs accessible from both the VM and your MacBook:
-## Create the MacVLAN interface on the Ubuntu VM:
+
+## Step 3: Create the MacVLAN interface on the Ubuntu VM:
 
 ```
 
