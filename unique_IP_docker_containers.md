@@ -45,7 +45,7 @@ Inside the Ubuntu VM for IEDs, create a MacVLAN network in that VM and then assi
 
 This makes a special Docker network where each container looks like a separate device on your LAN (just like your VMs).
 
-### Extra Information, was not used as this method compares bridge network and macvlan network. Instead, refer to section below *Step 3: Create the MacVLAN interface on the Ubuntu VM** 
+### Extra Information, was not used as this method compares bridge network and macvlan network. Instead, refer to section below *Step 3: Create the MacVLAN interface on the Ubuntu VM* 
 
 4. ✅ Step 3: Run containers with static IPs
 Here’s where the difference comes in:
