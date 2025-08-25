@@ -11,7 +11,7 @@
 
 docker build -t openplc-docker .
 
-Preface before step 2:  
+#### Preface before step 2 - MacVLAN does not work on MacOS, works on Linux (Ubuntu VM) :  
 - **Unlike Linux, macOS network interfaces can’t be directly assigned to macvlan. Macvlan works on Linux because it can create a virtual interface on top of a real NIC.** 
 
 - **On macOS, Docker Desktop runs in a Linux VM (inside HyperKit/UTM), so it doesn’t have direct access to the Mac’s physical interfaces for macvlan.**
