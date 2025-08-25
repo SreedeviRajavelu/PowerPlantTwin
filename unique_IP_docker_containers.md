@@ -36,18 +36,14 @@ Inside the Ubuntu VM for IEDs, create a MacVLAN network in that VM and then assi
 
 1) Check which network interface of your Ubuntu VM connects to the same network as your IEDs. Check with `ip a` inside the VM.
 
-- **Single line command for creating Docker MacVLAN network inside Ubuntu VM using:** 
+- **Single line command for creating Docker MacVLAN network inside Ubuntu VM using:**
+  
   - **Parent Interface: enp0s9**
   - **Subnet: 192.168.56.0/24**
 
 ` docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan `
 
 This makes a special Docker network where each container looks like a separate device on your LAN (just like your VMs).
-
-
-- Single line command:
-  
- ` docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan `
 
 Ignore this part, was not used: 
 Instead, refer to section below **Step 3: Create the MacVLAN interface on the Ubuntu VM** 
