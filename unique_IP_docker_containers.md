@@ -1,7 +1,8 @@
 ## What is MacVLAN?
 
 - A technology that creates multiple virtual network interfaces, each with a unique Media Access Control (MAC) address, on a single physical network interface.
-- MacVLAN literally means creating virtual interfaces that operate at the MAC layer each appearing as a separate physical network device with its own MAC address.    
+- MacVLAN literally means creating virtual interfaces that operate at the MAC layer each appearing as a separate physical network device with its own MAC address.
+- Docker MacVLAN is a network driver that allows Docker containers to have their own unique MAC addresses directly on the host's physical network, making them appear as if they are directly connected devices on the network. 
 
 **Step 1: Build your image**
 ( After following steps in the repository: https://github.com/thiagoralves/OpenPLC_v3.git )
