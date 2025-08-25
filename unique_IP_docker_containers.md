@@ -48,7 +48,9 @@ This makes a special Docker network where each container looks like a separate d
   
  ` docker network create -d macvlan --subnet=192.168.56.0/24 --gateway=192.168.56.1 -o parent=enp0s9 plc-macvlan `
 
-Ignore this part, was not used. Refer to section below **Step 3: Create the MacVLAN interface on the Ubuntu VM** :
+Ignore this part, was not used: 
+Instead, refer to section below **Step 3: Create the MacVLAN interface on the Ubuntu VM** 
+
 4. ✅ Step 3: Run containers with static IPs  
 Here’s where the difference comes in:
 On a bridge network, you must use -p host_port:container_port because containers are hidden behind the host, and ports must be forwarded.
