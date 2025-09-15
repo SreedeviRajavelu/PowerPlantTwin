@@ -121,6 +121,8 @@ sreedevirajavelu@srees-MacBook-Air ~ %
 ```
 
 
+## Method 1: Share teh volume as a tarball (has not worked now)
+
 1. Persisting information that was added to scada LTS browser -> MySQL.
 
 Run the backup command: 
@@ -150,3 +152,16 @@ Put them in the same folder.
 
 5. Start ScadaLTS & MySQL :
    -  `docker-compose up -d`
+  
+## Method 2: Dump/Restore SQL
+
+Sometimes copying raw files does not work due to InnoDB metadata. The more reliable method is:
+
+1. On the original container:
+`docker exec mysql mysqldump -uroot -proot scadalts > scadalts_dump.sql`
+
+2. Share `scadalts_dump.sql` instead of the volume.
+3. On the new host:
+   `docker exec -i mysql_new mysql -uroot -proot scadalts < scadalts_dump.sql`
+
+This guarantees all tables, data, and indexes are restored correctly.
